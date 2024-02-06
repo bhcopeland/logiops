@@ -219,9 +219,8 @@ void ReceiverMonitor::_stopPair() {
 void ReceiverMonitor::_addHandler(const hidpp::DeviceConnectionEvent& event, int tries) {
     auto device_path = _receiver->devicePath();
     try {
-        addDevice(event);
-        const std::lock_guard lock(_wait_mutex);
         _waiters.erase(event.index);
+        addDevice(event);
     } catch (DeviceNotReady& e) {
         if (tries == max_tries) {
             logPrintf(WARN, "Failed to add device %s:%d after %d tries."
