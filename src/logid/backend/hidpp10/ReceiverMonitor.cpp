@@ -158,7 +158,6 @@ void ReceiverMonitor::enumerate() {
 }
 
 void ReceiverMonitor::waitForDevice(hidpp::DeviceIndex index) {
-    const std::lock_guard lock(_wait_mutex);
     if (!_waiters.count(index)) {
         _waiters.emplace(index, _receiver->rawDevice()->addEventHandler(
                 {[index](const std::vector<uint8_t>& report) -> bool {
